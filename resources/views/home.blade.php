@@ -191,7 +191,7 @@
                     @if($dragon->primaryImage)
                         <img src="{{ asset('storage/' . $dragon->primaryImage->image_path) }}" alt="{{ $dragon->name ?? 'Dragon' }}">
                     @else
-                        <img src="{{ asset('images/dragonSlideOne.jpeg') }}" alt="Dragon">
+                        <img src="{{ asset('images/dragonSlideOne.jpg') }}" alt="Dragon">
                     @endif
                 </li>
             @endforeach
@@ -215,7 +215,7 @@
     <div class="splide__track">
         <ul class="splide__list">
             <li class="splide__slide"><img src="{{ asset('images/dragonSlideOne.jpeg') }}" alt="Dragon"></li>
-            <li class="splide__slide"><img src="{{ asset('images/dragonSlideTwo.jpeg') }}" alt="Dragon"></li>
+            <li class="splide__slide"><img src="{{ asset('images/dragonSlideTwo.jpg') }}" alt="Dragon"></li>
             <li class="splide__slide"><img src="{{ asset('images/dragonSlideThree.jpeg') }}" alt="Dragon"></li>
             <li class="splide__slide"><img src="{{ asset('images/dragonSlideFour.jpeg') }}" alt="Dragon"></li>
         </ul>
