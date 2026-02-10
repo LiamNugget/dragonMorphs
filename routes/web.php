@@ -10,7 +10,11 @@ Route::get('/morphs', [HomeController::class, 'morphs'])->name('morphs');
 Route::get('/breeding-stock', [HomeController::class, 'breedingStock'])->name('breeding-stock');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('dashboard', [
+        'totalDragons' => \App\Models\Dragon::count(),
+        'availableDragons' => \App\Models\Dragon::where('status', 'available')->count(),
+        'soldDragons' => \App\Models\Dragon::where('status', 'sold')->count(),
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
