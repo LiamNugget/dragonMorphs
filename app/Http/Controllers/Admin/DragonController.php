@@ -40,7 +40,7 @@ class DragonController extends Controller
             'description' => 'nullable|string',
             'notes' => 'nullable|string',
             'date_listed' => 'nullable|date',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:20480'
         ]);
 
         $dragon = Dragon::create($validated);
@@ -85,7 +85,7 @@ class DragonController extends Controller
             'notes' => 'nullable|string',
             'date_listed' => 'nullable|date',
             'date_sold' => 'nullable|date',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:20480'
         ]);
 
         $dragon->update($validated);
