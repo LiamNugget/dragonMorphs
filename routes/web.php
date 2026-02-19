@@ -25,6 +25,8 @@ Route::middleware('auth')->group(function () {
     // Admin dragon routes
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('dragons', DragonController::class);
+        Route::delete('dragons/{dragon}/images/{image}', [DragonController::class, 'deleteImage'])->name('dragons.images.delete');
+        Route::patch('dragons/{dragon}/images/{image}/primary', [DragonController::class, 'setPrimaryImage'])->name('dragons.images.primary');
     });
 });
 

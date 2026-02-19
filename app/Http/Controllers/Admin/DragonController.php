@@ -12,7 +12,7 @@ class DragonController extends Controller
 {
     public function index()
     {
-        $dragons = Dragon::with('primaryImage')->latest()->get();
+        $dragons = Dragon::with(['primaryImage', 'parentMale', 'parentFemale'])->latest()->get();
         return view('admin.dragons.index', compact('dragons'));
     }
 
@@ -113,5 +113,42 @@ class DragonController extends Controller
         $dragon->delete();
 
         return redirect()->route('admin.dragons.index')->with('success', 'Dragon deleted successfully!');
+    }
+
+    public function deleteImage(Dragon $dragon, Image $image)
+    {
+        if ($image->dragon_id !== $dragon->id) {
+            abort(404);
+        }
+
+        Storage::disk('public')->delete($image->image_path);
+
+        $wasPrimary = $image->is_primary;
+        $image->delete();
+
+        // If the deleted image was primary, make the first remaining image primary
+        if ($wasPrimary) {
+            $firstImage = $dragon->images()->orderBy('order')->first();
+            if ($firstImage) {
+                $firstImage->update(['is_primary' => true]);
+            }
+        }
+
+        return redirect()->route('admin.dragons.edit', $dragon)->with('success', 'Image deleted.');
+    }
+
+    public function setPrimaryImage(Dragon $dragon, Image $image)
+    {
+        if ($image->dragon_id !== $dragon->id) {
+            abort(404);
+        }
+
+        // Remove primary from all images of this dragon
+        $dragon->images()->update(['is_primary' => false]);
+
+        // Set the selected image as primary
+        $image->update(['is_primary' => true]);
+
+        return redirect()->route('admin.dragons.edit', $dragon)->with('success', 'Primary image updated.');
     }
 }

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl leading-tight" style="color: #407200;">
             Edit Dragon: {{ $dragon->name ?? 'Unnamed' }}
         </h2>
     </x-slot>
@@ -147,23 +147,6 @@
                             @error('notes') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                         </div>
 
-                        <!-- Current Images -->
-                        @if($dragon->images->count() > 0)
-                            <div class="mt-6">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Current Images</label>
-                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                    @foreach($dragon->images as $image)
-                                        <div class="relative">
-                                            <img src="{{ asset('storage/' . $image->image_path) }}" alt="Dragon image" class="w-full h-32 object-cover rounded">
-                                            @if($image->is_primary)
-                                                <span class="absolute top-1 right-1 bg-green-500 text-white text-xs px-2 py-1 rounded">Primary</span>
-                                            @endif
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endif
-
                         <!-- Add New Images -->
                         <div class="mt-6">
                             <label for="images" class="block text-sm font-medium text-gray-700">Add New Images</label>
@@ -180,6 +163,43 @@
                             </a>
                         </div>
                     </form>
+
+                    <!-- Current Images (outside main form so delete/primary forms work independently) -->
+                    @if($dragon->images->count() > 0)
+                        <div class="mt-8 pt-6 border-t border-gray-200">
+                            <label class="block text-sm font-medium text-gray-700 mb-3">Current Images</label>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                @foreach($dragon->images->sortBy('order') as $image)
+                                    <div class="rounded overflow-hidden border-2" style="border-color: {{ $image->is_primary ? '#407200' : '#e5e7eb' }};">
+                                        <div class="relative">
+                                            <img src="{{ asset('storage/' . $image->image_path) }}" alt="Dragon image" class="w-full h-32 object-cover">
+                                            @if($image->is_primary)
+                                                <span class="absolute top-1 right-1 bg-green-600 text-white text-xs px-2 py-1 rounded font-bold">Primary</span>
+                                            @endif
+                                        </div>
+                                        <div class="flex gap-1 p-2 bg-gray-50">
+                                            @if(!$image->is_primary)
+                                                <form action="{{ route('admin.dragons.images.primary', [$dragon, $image]) }}" method="POST" class="flex-1">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit" class="w-full text-xs py-1.5 px-2 rounded text-white font-medium" style="background-color: #407200;">
+                                                        Set Primary
+                                                    </button>
+                                                </form>
+                                            @endif
+                                            <form action="{{ route('admin.dragons.images.delete', [$dragon, $image]) }}" method="POST" class="flex-1" onsubmit="return confirm('Delete this image?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="w-full text-xs py-1.5 px-2 bg-red-500 text-white rounded font-medium">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

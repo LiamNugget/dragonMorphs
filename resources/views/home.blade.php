@@ -7,14 +7,14 @@
 
 <div class="title_container">
     <div class="title_text">
-        <h1><i class="fas fa-dragon"></i> Welcome to DragonMorphs</h1>
+        <h1>Welcome to DragonMorphs</h1>
     </div>
 </div>
 
 <style>
 .highlight {
-    background: rgba(255, 255, 255, 0.95);
-    color: #407200;
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
     padding: 0.15rem 0.5rem;
     border-radius: 4px;
     font-weight: 700;
@@ -34,14 +34,7 @@
     border-radius: 4px;
     text-align: center;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
     border: 2px solid rgba(64, 114, 0, 0.1);
-}
-
-.feature-box:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 50px rgba(64, 114, 0, 0.25);
-    border-color: rgba(64, 114, 0, 0.3);
 }
 
 .feature-icon {
@@ -82,14 +75,9 @@
     font-size: 1.1rem;
     text-decoration: none;
     box-shadow: 0 8px 25px rgba(64, 114, 0, 0.4);
-    transition: all 0.3s ease;
     margin: 2rem auto;
     text-align: center;
-}
-
-.cta-button:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 12px 35px rgba(64, 114, 0, 0.5);
+    cursor: pointer;
 }
 
 .cta-button i {
@@ -164,7 +152,121 @@
 }
 
 .splide__arrow:hover {
-    transform: scale(1.1) !important;
+    transform: translateY(-50%) !important;
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+    .features-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .timeline-year {
+        font-size: 2.5rem;
+        min-width: 110px;
+    }
+
+    .achievements-timeline::before {
+        left: 160px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .feature-box {
+        padding: 1.5rem;
+    }
+
+    .feature-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .feature-box h3 {
+        font-size: 1.1rem;
+    }
+
+    .cta-button {
+        padding: 0.85rem 1.75rem;
+        font-size: 1rem;
+    }
+
+    .timeline-item {
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .timeline-year {
+        font-size: 2rem;
+        min-width: 80px;
+    }
+
+    .timeline-text {
+        font-size: 1rem;
+    }
+
+    .timeline-dot {
+        width: 14px;
+        height: 14px;
+    }
+
+    .achievements-timeline::before {
+        left: 123px;
+    }
+
+    .achievements-timeline {
+        padding-left: 0;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .timeline-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .timeline-year {
+        font-size: 1.75rem;
+        min-width: auto;
+    }
+
+    .timeline-content {
+        gap: 1rem;
+    }
+
+    .timeline-text {
+        font-size: 0.95rem;
+    }
+
+    .achievements-timeline::before {
+        display: none;
+    }
+
+    .cta-button {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
+        gap: 0.5rem;
+    }
+
+    .feature-box {
+        padding: 1.25rem;
+    }
+
+    .feature-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+    }
 }
 </style>
 
