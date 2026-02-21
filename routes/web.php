@@ -9,6 +9,12 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/morphs', [HomeController::class, 'morphs'])->name('morphs');
 Route::get('/breeding-stock', [HomeController::class, 'breedingStock'])->name('breeding-stock');
 
+Route::get('/sitemap.xml', function () {
+    return response()
+        ->view('sitemap')
+        ->header('Content-Type', 'application/xml');
+})->name('sitemap');
+
 Route::get('/dashboard', function () {
     return view('dashboard', [
         'totalDragons' => \App\Models\Dragon::count(),

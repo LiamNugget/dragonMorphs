@@ -645,7 +645,7 @@
             </div>
             <ul class="links">
                 <li><a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="{{ route('morphs') }}" class="{{ request()->routeIs('morphs') ? 'active' : '' }}"><i class="fas fa-store"></i> Morphs</a></li>
+                <li><a href="{{ route('morphs') }}" class="{{ request()->routeIs('morphs') ? 'active' : '' }}"><i class="fas fa-tag"></i> Available</a></li>
                 <li><a href="{{ route('breeding-stock') }}" class="{{ request()->routeIs('breeding-stock') ? 'active' : '' }}"><i class="fas fa-star"></i> Breeding Stock</a></li>
             </ul>
             <div class="toggle_btn" id="mobile_toggle-btn">
@@ -678,7 +678,7 @@
                 <h2><i class="fas fa-link"></i> Quick Links</h2>
                 <ul>
                     <li><a href="{{ route('home') }}"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="{{ route('morphs') }}"><i class="fas fa-store"></i> Available Morphs</a></li>
+                    <li><a href="{{ route('morphs') }}"><i class="fas fa-tag"></i> Available</a></li>
                     <li><a href="{{ route('breeding-stock') }}"><i class="fas fa-star"></i> Breeding Stock</a></li>
                 </ul>
             </div>
