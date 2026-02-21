@@ -491,46 +491,123 @@
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
-    
+
     .card_image_container {
         height: 220px;
     }
-    
+
     .dragon_info_grid {
         grid-template-columns: 1fr;
     }
-    
+
     .modal-content {
         margin: 0;
         max-height: 100vh;
         border-radius: 0;
     }
-    
+
     .modal-slideshow {
         height: 300px;
     }
-    
+
     .modal-details {
         padding: 1.5rem;
     }
-    
+
     .modal-info-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .modal-price-section {
         flex-direction: column;
         gap: 1rem;
         align-items: flex-start;
     }
-    
+
     .parent-links {
         flex-direction: column;
     }
-    
+
     .parent-link {
         width: 100%;
     }
+}
+
+.modal-slide img {
+    cursor: zoom-in;
+}
+
+.modal-slide::after {
+    content: '\f065';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 0.4rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.modal-slide:hover::after {
+    opacity: 1;
+}
+
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+}
+
+.lightbox.active {
+    display: flex;
+    animation: fadeIn 0.2s;
+}
+
+.lightbox-img {
+    max-width: 95vw;
+    max-height: 95vh;
+    object-fit: contain;
+    cursor: default;
+    user-select: none;
+}
+
+.lightbox-close {
+    position: absolute;
+    right: 1.5rem;
+    top: 1.5rem;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    z-index: 10;
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+    line-height: 1;
+}
+
+.lightbox-close:hover {
+    background: rgba(255, 255, 255, 0.35);
 }
 </style>
 
@@ -594,7 +671,7 @@
                             @foreach($dragon->images as $index => $image)
                                 <div class="modal-slide {{ $index === 0 ? 'active' : '' }}">
                                     <div class="slide-background" style="background-image: url('{{ asset('storage/' . $image->image_path) }}');"></div>
-                                    <img src="{{ asset('storage/' . $image->image_path) }}" alt="{{ $dragon->name }}">
+                                    <img src="{{ asset('storage/' . $image->image_path) }}" alt="{{ $dragon->name }}" onclick="event.stopPropagation(); openLightbox(this.src, this.alt);">
                                 </div>
                             @endforeach
                             
@@ -734,6 +811,12 @@
         @endforeach
     </div>
 
+    <!-- Fullscreen image lightbox -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close" onclick="event.stopPropagation(); closeLightbox()">&times;</span>
+        <img class="lightbox-img" id="lightbox-img" src="" alt="" onclick="event.stopPropagation()">
+    </div>
+
     <script>
         let currentSlides = {};
 
@@ -789,9 +872,26 @@
             indicators[currentSlides[dragonId]].classList.add('active');
         }
 
-        // Close modal on ESC key
+        // Lightbox functions
+        function openLightbox(src, alt) {
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = src;
+            lightboxImg.alt = alt || '';
+            document.getElementById('lightbox').classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        // Close modal or lightbox on ESC key
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
+                const lightbox = document.getElementById('lightbox');
+                if (lightbox && lightbox.classList.contains('active')) {
+                    closeLightbox();
+                    return;
+                }
                 document.querySelectorAll('.modal.active').forEach(modal => {
                     const dragonId = modal.id.replace('modal-', '');
                     closeModal(dragonId);

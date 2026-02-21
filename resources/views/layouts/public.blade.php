@@ -461,20 +461,21 @@
             }
 
             .contact-bar {
-                padding: 0.4rem 1rem;
+                padding: 0.45rem 1rem;
             }
 
             .contact-bar-inner {
-                gap: 0.25rem;
-                flex-direction: column;
+                flex-direction: row;
+                gap: 1.25rem;
+                justify-content: center;
             }
 
             .contact-bar-text {
-                font-size: 0.7rem;
+                display: none;
             }
 
             .contact-bar-numbers {
-                gap: 1rem;
+                gap: 1.25rem;
             }
 
             .contact-bar-numbers a {
