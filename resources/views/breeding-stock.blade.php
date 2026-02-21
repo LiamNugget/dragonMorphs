@@ -500,10 +500,15 @@
         grid-template-columns: 1fr;
     }
 
+    .modal.active {
+        align-items: flex-start;
+    }
+
     .modal-content {
         margin: 0;
-        max-height: 100vh;
+        max-height: none;
         border-radius: 0;
+        width: 100%;
     }
 
     .modal-slideshow {
